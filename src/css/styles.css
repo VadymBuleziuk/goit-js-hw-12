@@ -91,6 +91,7 @@ body {
   gap: 24px;
   align-items: center;
   margin-left: 256px;
+  margin-bottom: 32px;
 }
 .photo-el {
   width: calc((100% - 48px) / 3);
@@ -127,4 +128,23 @@ body {
   letter-spacing: 0.04em;
   color: #2e2f42;
   font-family: 'Montserrat', sans-serif;
+}
+
+.load-button {
+  background-color: #4e75ff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: none;
+  margin: 0 auto;
+  padding: 8px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.load-button:hover {
+  background-color: #6c8cff;
 }
