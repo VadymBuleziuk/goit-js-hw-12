@@ -55,7 +55,7 @@ const renderImg = async () => {
 export const formSubmit = async event => {
   try {
     event.preventDefault();
-    loadingIndicator.style.display = 'block';
+    loadingIndicator.style.display = 'inline-block';
     input = form.elements.input.value.trim();
     if (input === '') {
       iziToast.show({
