@@ -11,6 +11,7 @@ export const form = document.querySelector('.js-form');
 let pageNum = 1;
 let lightbox;
 let input;
+let totalImage;
 
 const fetchImgs = (value, input) => {
   return axios.get(
@@ -45,6 +46,17 @@ const renderImg = async () => {
       captionsData: 'alt',
       captionDelay: 500,
     });
+    totalImage = data.hits.length;
+    if (totalImage < 15) {
+      loadButton.style.display = 'none';
+      iziToast.show({
+        theme: 'dark',
+        icon: 'icon-person',
+        message: "We're sorry, but you've reached the end of search results.",
+        position: 'center',
+      });
+      return;
+    }
     loadButton.style.display = 'block';
   } catch (err) {
     loadingIndicator.style.display = 'none';
@@ -92,13 +104,9 @@ const loadMore = async event => {
     file2.photoList.insertAdjacentHTML('beforeend', galleryTemplate);
 
     lightbox.refresh();
-    const cart = file2.photoList.querySelector('.photo-el');
-    const rect = cart.getBoundingClientRect().height;
-    window.scrollBy({
-      top: 2 * rect,
-      behavior: 'smooth',
-    });
-    if (data.hits < 15) {
+    totalImage += data.hits.length;
+    if (data.hits.length < 15 || totalImage >= data.totalHits) {
+      loadButton.style.display = 'none';
       loadButton.removeEventListener('click', loadMore);
       iziToast.show({
         theme: 'dark',
@@ -109,7 +117,15 @@ const loadMore = async event => {
       return;
     }
     loadButton.style.display = 'block';
+    const cart = file2.photoList.querySelector('.photo-el');
+    const rect = cart.getBoundingClientRect().height;
+    window.scrollBy({
+      top: 2 * rect,
+      behavior: 'smooth',
+    });
   } catch (err) {
+    loadingIndicator.style.display = 'none';
+
     console.log(err);
   }
 };
